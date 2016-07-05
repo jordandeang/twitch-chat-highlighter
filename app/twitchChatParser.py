@@ -66,7 +66,7 @@ def parseTwitchChat(videoId):
 				""")
 
 
-	p = figure(width=800, height=250, title = videoTitle, x_axis_type='datetime')
+	p = figure(width=1024, height=280, title = videoTitle)
 	p.xaxis[0].axis_label = 'VOD Time'
 	p.xaxis[0].formatter = NumeralTickFormatter(format='00:00:00')
 	p.yaxis[0].axis_label = 'Number of Twitch Chat Messages'

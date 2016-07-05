@@ -22,6 +22,9 @@
 		  Enter the link to a Twitch.tv VOD<br>
 		  {{ form.videoURL(size=80) }} <input type="submit" value="Highlight VOD" onlick="loading();"><div id="loading"></div><br>
 	  	</p>
+	  	{% for error in form.videoURL.errors %}
+	  		<span style="color: red;">{{ error }}</span>
+        {% endfor %}
   		</form>
 		<script type="text/javascript">// <![CDATA[
         function loading(){
