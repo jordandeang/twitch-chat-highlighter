@@ -1,0 +1,45 @@
+<html>
+	<head>
+		<title>{{ title }}</title>
+		<link
+		    href="http://cdn.pydata.org/bokeh/release/bokeh-0.12.0.min.css"
+		    rel="stylesheet" type="text/css">
+		<link
+		    href="http://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.0.min.css"
+		    rel="stylesheet" type="text/css">
+
+		<script src="http://cdn.pydata.org/bokeh/release/bokeh-0.12.0.min.js"></script>
+		<script src="http://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.0.min.js"></script>
+		<script src= "http://player.twitch.tv/js/embed/v1.js"></script>
+  	</head>
+  	<body>
+		<h1>Sup</h1>
+		<form action="" method="post" name="highlight">
+	  		{{ form.hidden_tag() }}
+	 	<p>
+		  Enter the link to a Twitch.tv VOD<br>
+		  {{ form.videoURL(size=80) }}<br>
+	  	</p>
+	  	<p><input type="submit" value="Highlight VOD"></p>
+  		</form>
+
+		{% for vod in vods %}
+
+		<div id="ye"></div>
+		<script type="text/javascript">
+    		var options = {
+        		width: 854,
+        		height: 480,
+        		video: "{{ vod.videoId }}"
+       		};
+    		var player = new Twitch.Player("ye", options);
+    		player.setVolume(0.5);
+    		player.pause();
+		</script>
+		{% autoescape false %}
+		{{ vod.plotScript }}
+		{{ vod.plotDiv }}
+		{% endautoescape %}
+		{% endfor %}
+  	</body>
+</html>
