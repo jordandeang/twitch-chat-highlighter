@@ -26,6 +26,6 @@ def vod(videoId):
 		}
 	]
 	return render_template('vod.html', 
-							title='test',
+							title='Vod Highlight',
 							form=form,
 							vods=vods)
