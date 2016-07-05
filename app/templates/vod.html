@@ -1,0 +1,22 @@
+{% extends "index.html" %}
+
+{% block content %}
+		{% for vod in vods %}
+
+		<div id="ye"></div>
+		<script type="text/javascript">
+    		var options = {
+        		width: 854,
+        		height: 480,
+        		video: "{{ vod.videoId }}"
+       		};
+    		var player = new Twitch.Player("ye", options);
+    		player.setVolume(0.5);
+    		player.pause();
+		</script>
+		{% autoescape false %}
+		{{ vod.plotScript }}
+		{{ vod.plotDiv }}
+		{% endautoescape %}
+		{% endfor %}
+{% endblock %}

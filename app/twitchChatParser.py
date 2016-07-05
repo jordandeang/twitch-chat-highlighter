@@ -6,14 +6,16 @@ from bokeh.models import HoverTool, NumeralTickFormatter
 from bokeh.resources import CDN
 from bokeh.embed import components
 
-# Retrieves the chat from the given VOD and returns an HTML plot of the data
-def parseTwitchChat(videoURL):
-	
+# Parses the given URL to retrieve the video ID
+def getVideoIdFromURL(videoURL):
 	# Video id input parsed from videoURL
-	videoId = videoURL[string.find(videoURL, '/v/'):].replace('/', '')
+	return videoURL[string.index(videoURL, '/v/'):][3:]
+
+# Retrieves the chat from the given VOD and returns an HTML plot of the data
+def parseTwitchChat(videoId):
 
 	# Get start and stop time by looking at the 'detail' message from Twitch
-	response = requests.get('https://rechat.twitch.tv/rechat-messages?start=0&video_id=' + videoId).json()
+	response = requests.get('https://rechat.twitch.tv/rechat-messages?start=0&video_id=v' + videoId).json()
 
 	# Get 'detail' message and split it
 	detail = response['errors'][0]['detail'].split(' ')
@@ -29,7 +31,7 @@ def parseTwitchChat(videoURL):
 	for timestamp in xrange(start, start+1000, 30):
 
 		# Request messages from Twitch
-		response = requests.get('https://rechat.twitch.tv/rechat-messages?start=' + str(timestamp) + '&video_id=' + videoId).json()
+		response = requests.get('https://rechat.twitch.tv/rechat-messages?start=' + str(timestamp) + '&video_id=v' + videoId).json()
 		data = response['data']
 
 
@@ -45,7 +47,7 @@ def parseTwitchChat(videoURL):
 	y = [a[1] for a in concentrationByTime]
 
 	# # Requests VOD title
-	videoTitle = requests.get('https://api.twitch.tv/kraken/videos/' + videoId).json()['title']
+	videoTitle = requests.get('https://api.twitch.tv/kraken/videos/v' + videoId).json()['title']
 
 	# Bokeh stuff
 	right = list(x)

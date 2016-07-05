@@ -1,39 +1,31 @@
-from flask import render_template, redirect
+from flask import render_template, redirect, url_for
 from app import app
 from .forms import VideoURLForm
-from .twitchChatParser import parseTwitchChat
+from .twitchChatParser import parseTwitchChat, getVideoIdFromURL
 
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
 	form = VideoURLForm()
 	if form.validate_on_submit():
-		return redirect('/test')
+		return redirect(url_for('vod', videoId=getVideoIdFromURL(form.videoURL.data)))
 
-	vods = [
-		{
-		'videoId' : 'v75990824',
-		'plotScript' : 'nah',
-		'plotDiv' : 'plotDiv'
-		}
-	]
 	return render_template('index.html', 
 							title='Home',
-							form=form,
-							vods=vods,)
+							form=form)
 
-@app.route('/test', methods=['GET', 'POST'])
-def testView():
+@app.route('/v/<videoId>', methods=['GET', 'POST'])
+def vod(videoId):
 	form = VideoURLForm()
-	plotScript, plotDiv = parseTwitchChat('https://www.twitch.tv/smashstudios/v/75990824')
+	plotScript, plotDiv = parseTwitchChat(videoId)
 	vods = [
 		{
-			'videoId' : 'v75990824',
+			'videoId' : 'v'+videoId,
 			'plotScript' : plotScript,
 			'plotDiv' : plotDiv
 		}
 	]
-	return render_template('index.html', 
-						title='test',
-						form=form,
-						vods=vods,)
+	return render_template('vod.html', 
+							title='test',
+							form=form,
+							vods=vods)
