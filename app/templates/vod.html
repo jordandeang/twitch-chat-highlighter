@@ -1,22 +1,35 @@
 {% extends "index.html" %}
 
 {% block content %}
-		{% for vod in vods %}
-
-		<div id="ye"></div>
-		<script type="text/javascript">
-    		var options = {
-        		width: 1024,
-        		height: 576,
-        		video: "{{ vod.videoId }}"
-       		};
-    		var player = new Twitch.Player("ye", options);
-    		player.setVolume(0.5);
-    		player.pause();
-		</script>
-		{% autoescape false %}
-		{{ vod.plotScript }}
-		{{ vod.plotDiv }}
-		{% endautoescape %}
-		{% endfor %}
+	<div id="player"></div>
+	<script type="text/javascript">
+		var options = {
+    		width: 1024,
+    		height: 576,
+    		video: "v{{ videoId }}"
+   		};
+		var player = new Twitch.Player("player", options);
+		player.setVolume(0.5);
+		player.pause();
+	</script>
+	<div id="loading">
+	<img src="{{ url_for('static', filename='img/gears.gif') }}" alt="Loading Gears" style="width:128px;height:128px;">
+	Loading chat data...
+	(If it is a long VOD, this could take a while)
+	</div>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$.ajax({
+				type: "POST",
+				url: "/p",
+				data: { videoId : "{{ videoId }}" },
+				datatype: "html"
+			}).always(function( data ) {
+				$("#loading").hide();
+				var bokeh = document.createElement("bokeh")
+				bokeh.innerHTML = data;
+				$("body").append(bokeh)
+  			});
+		});
+	</script>
 {% endblock %}

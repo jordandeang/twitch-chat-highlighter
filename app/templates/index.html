@@ -14,23 +14,20 @@
 		<script src= "http://player.twitch.tv/js/embed/v1.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 		<link href="static/css/main.css" rel="stylesheet">
+		<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
 	<body>
 		<h1>Twitch VOD Highlighter</h1>
 		<form action="" method="post" name="highlight">
 	  		{{ form.hidden_tag() }}
 	 	<p>
 		  Enter the link to a Twitch.tv VOD<br>
-		  {{ form.videoURL(size=80) }} <input type="submit" value="Highlight VOD" onlick="loading();"><div id="loading"></div><br>
+		  {{ form.videoURL(size=80) }} <input id="highlight" type="submit" value="Highlight VOD"><br>
 	  	</p>
 	  	{% for error in form.videoURL.errors %}
 	  		<span style="color: red;">{{ error }}</span>
         {% endfor %}
   		</form>
-		<script type="text/javascript">// <![CDATA[
-        function loading(){
-            $("#loading").show();     
-        }
-// ]]></script>
+
 	{% block content %}
 	{% endblock %}
   	</body>
