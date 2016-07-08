@@ -1,6 +1,7 @@
 {% extends "index.html" %}
 
 {% block content %}
+<p>Click on points on the graph to go that timestamp on the VOD!</p>
 	<div id="player"></div>
 	<script type="text/javascript">
 		var options = {
@@ -23,6 +24,7 @@
 				type: "POST",
 				url: "/p",
 				data: { videoId : "{{ videoId }}" },
+				timeout: 600000,
 				datatype: "html"
 			}).always(function( data ) {
 				$("#loading").hide();

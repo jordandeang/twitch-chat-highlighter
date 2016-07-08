@@ -1,7 +1,7 @@
 from flask_wtf import Form
 from wtforms import StringField
 from wtforms.validators import InputRequired, URL, ValidationError
-from .twitchChatParser import getVideoIdFromURL
+from app.twitchChatParser import getVideoIdFromURL
 
 def isTwitchVOD(form, field):
 	if 'twitch.tv/' in field.data and '/v/' in field.data:

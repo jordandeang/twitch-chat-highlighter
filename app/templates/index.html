@@ -20,7 +20,7 @@
 		<form action="" method="post" name="highlight">
 	  		{{ form.hidden_tag() }}
 	 	<p>
-		  Enter the link to a Twitch.tv VOD<br>
+		  Enter the link to a Twitch.tv VOD (like this one: https://www.twitch.tv/smashstudios/v/76091347)<br>
 		  {{ form.videoURL(size=80) }} <input id="highlight" type="submit" value="Highlight VOD"><br>
 	  	</p>
 	  	{% for error in form.videoURL.errors %}

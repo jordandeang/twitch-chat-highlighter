@@ -28,7 +28,7 @@ def parseTwitchChat(videoId):
 	concentrationByTime = []
 
 	# For every 30 seconds, start to stop; request chat messages
-	for timestamp in xrange(start, start+1000, 30):
+	for timestamp in xrange(start,stop, 30):
 
 		# Request messages from Twitch
 		response = requests.get('https://rechat.twitch.tv/rechat-messages?start=' + str(timestamp) + '&video_id=v' + videoId).json()
@@ -56,7 +56,7 @@ def parseTwitchChat(videoId):
 	right = list(x)
 	right.pop(0)
 	#stop-start
-	right.append(1000)
+	right.append(stop-start)
 	timeF = [str(datetime.timedelta(seconds=i)) for i in x]
 
 	source = ColumnDataSource(data=dict(timeF=timeF))
