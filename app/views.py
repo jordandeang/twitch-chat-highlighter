@@ -3,8 +3,8 @@ from app import application
 from app.forms import VideoURLForm
 from app.twitchChatParser import getVideoIdFromURL, parseTwitchChat
 
-
 @application.route('/', methods=['GET', 'POST'])
+@application.route('/index', methods=['GET', 'POST'])
 def index():
 	form = VideoURLForm()
 	if form.validate_on_submit():
